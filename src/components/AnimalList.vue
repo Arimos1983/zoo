@@ -4,6 +4,9 @@
           <input v-model="newAnimals.name" type="text" placeholder="name" > <br>
           <input v-model="newAnimals.species" type="text" placeholder="species"> <br>
           <input v-model="newAnimals.yearOfBirth" type="text" placeholder="year of birth"> <br>
+          <select v-model="newAnimals.sector">
+              <option v-for="sector in sectors" :key="sector.zona" v-bind:value="sector" >{{sector.zona}}</option>
+          </select><br>
           <button @click="addAnimal" type="submit">Add animal</button>
       </form>
       <table>
@@ -12,6 +15,7 @@
             <td>{{animal.species}}</td>
             <td v-if="animal.yearOfBirth != '' ">{{animal.yearOfBirth}}</td>
             <td v-else>{{'Unknown'}}</td>
+            <td>{{animal.sector.zona}}</td>
             <td>
                 <button @click="removeAnimal(animal)">Remove</button>
             </td>
@@ -24,19 +28,26 @@
 </template>
 
 <script>
+const sectors = [
+    {zona: "Mesojedi"},
+    {zona: "biljojedi"},
+    {zona: "Ptice"},
+    {zona: "Vodene Zivotinje"}
+]
 export default {
   name: 'AnimalList',
 
     data()
     {
         return {
+            sectors: sectors,
             newAnimals: {},
             animals: [
-                {id: 1,name: "Pera", species: "Lav", yearOfBirth: "2001" },
-                {id: 2,name: "Mile", species: "Delfin", yearOfBirth: "2007" },
-                {id: 3,name: "Milica", species: "Zebra", yearOfBirth: "2011" },
-                {id: 4,name: "Jovan", species: "Soko", yearOfBirth: "" },
-                {id: 5,name: "Snesko", species: "Polarni medved", yearOfBirth: "1998" },
+                {id: 1,name: "Pera", species: "Lav", yearOfBirth: "2001", sector: sectors[0]},
+                {id: 2,name: "Mile", species: "Delfin", yearOfBirth: "2007", sector: sectors[3]},
+                {id: 3,name: "Milica", species: "Zebra", yearOfBirth: "2011", sector: sectors[1]},
+                {id: 4,name: "Jovan", species: "Soko", yearOfBirth: "", sector: sectors[2]},
+                {id: 5,name: "Snesko", species: "Polarni medved", yearOfBirth: "1998", sector: sectors[0]},
             ]
 
         };
@@ -57,6 +68,7 @@ export default {
         },
         addAnimal()
         {
+            console.log(this.newAnimals.sector)
             this.animals.push(this.newAnimals);
             this.newAnimals = {};
         }
