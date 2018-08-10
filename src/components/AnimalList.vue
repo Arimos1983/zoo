@@ -14,7 +14,7 @@
       </form>
 
       <table>
-        <tr v-for="(animal, key) in animals" :key="key" >
+        <tr v-for="(animal, key) in animals" :key="key" :class="{backgroundColor: animal.background}"  >
             <td>{{animal.name}}</td>
             <td>{{animal.species}}</td>
             <td v-if="animal.yearOfBirth != '' ">{{animal.yearOfBirth}}</td>
@@ -25,6 +25,9 @@
             </td>
             <td>
                 <button @click="moveToTop(animal)">Move up</button>
+            </td>
+            <td>
+                <button @click="togleBackgroundColor(animal)">Toggle Background</button>
             </td>
         </tr>
       </table>
@@ -54,7 +57,7 @@ export default {
     data()
     {
         return {
-            color: "red",
+            backgroundColor: {background:'red'},
             sectors: sectors,
             newAnimals: {},
             animals: [
@@ -98,6 +101,16 @@ export default {
             });
             alert(animalsList.toString());
             
+        },
+        togleBackgroundColor(animal)
+        {
+            if(animal.background){
+                animal.background = false;
+            }
+            else
+            {
+                animal.background = true;
+            }
         }
 
     }
@@ -105,4 +118,9 @@ export default {
   
 };
 </script>
+<style>
+ .backgroundColor{
+     background: red;
+ }
+</style>
 
